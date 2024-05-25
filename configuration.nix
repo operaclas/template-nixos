@@ -102,4 +102,24 @@
 
   # system.build.toplevelActivation = "root";
 
+  # Nix yapılandırması
+  nix.settings = {
+    max-jobs = 8;  # Aynı anda çalışacak maksimum iş sayısı
+    cores = 8;     # Her iş için kullanılacak çekirdek sayısı
+  };
+
+  # earlyoom servisini etkinleştirme
+  services.earlyoom = {
+    enable = true;
+    enableNotifications = true;
+  };
+
+  # Nix-daemon için OOM ayarları
+  services."nix-daemon".serviceConfig.OOMScoreAdjust = 1000;
+
+  # Disk montajı
+  fileSystems."/nix/store" = {
+    device = "/dev/vda";
+    fsType = "ext4";
+  };
 }
